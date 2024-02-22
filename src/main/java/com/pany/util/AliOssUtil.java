@@ -15,10 +15,10 @@ import java.io.InputStream;
 
 @Component
 public class AliOssUtil {
-    String endpoint = "https://oss-cn-shenzhen.aliyuncs.com";
-    String bucketName = "west2-work4-pany0593";
-    String accessKeyId="LTAI5tHZWeAYsEY9p5hKUFya";
-    String accessKeySecret="s6by6ANbwp254DmDGrF3NCKGfF0Yko";
+    String endpoint = "";
+    String bucketName = "";
+    String accessKeyId="";
+    String accessKeySecret="";
     String url="";
 
     public String uploadFile(String objectName, InputStream inputStream) throws Exception {
