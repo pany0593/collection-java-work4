@@ -41,12 +41,13 @@ public class CommentController {
         if(comment==null){
             return Result.error("文章不存在");
         }
-        int originLikes=comment.getLikes();
-        commentService.likeComment(commentId);
-        //?回滚
-        if(commentService.findByCommentId(commentId).getLikes()-originLikes!=1){
-            return Result.error("点赞失败");
+        List<Comment> favoriteComments = commentService.getFavoriteCommentByUserId();
+        for (Comment tmpComment:favoriteComments) {
+            if(tmpComment.getCommentId().equals(commentId)){
+                return Result.error("已经赞过");
+            }
         }
+        commentService.likeComment(commentId);
         return Result.success();
     }
 }

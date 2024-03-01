@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/work4
+    username: root
+    password: 123456
+jwt:
+  secret: work4@pany0593
+  ValidityPeriod: 10800000
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+alioss:
+  endpoint: https://oss-cn-shenzhen.aliyuncs.com
+  bucketName: west2-work4-pany0593
+  accessKeyId: LTAI5tHHH6dm1hF6JWs99fLc
+  accessKeySecret: utisx34v3gVmsjVZk6uXLBhkChSg16
+default:
+  avatarUrl: https://west2-work4-pany0593.oss-cn-shenzhen.aliyuncs.com/avatar/default-avatar.png
+

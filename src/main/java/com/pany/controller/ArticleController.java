@@ -38,6 +38,7 @@ public class ArticleController {
             return Result.error("上传失败");
         }
         Article article=articleService.findByArticleId(articleId);
+        article.setAuthorName(articleService.getNameById(article.getAuthorId()));
         return Result.success(article);
     }
 
@@ -60,6 +61,9 @@ public class ArticleController {
 
     @GetMapping("/get_list")
     public Result getList(Integer page,Integer sort){
+        if(page<1){
+            return Result.error("页数错误");
+        }
         //?参数校验
         List<Article> articles = articleService.getList(page, sort);
         if(articles==null||articles.isEmpty()){
@@ -74,12 +78,13 @@ public class ArticleController {
         if(article==null){
             return Result.error("文章不存在");
         }
-        int originLikes=article.getLikes();
-        articleService.likeArticle(articleId);
-        //?回滚
-        if(articleService.findByArticleId(articleId).getLikes()-originLikes!=1){
-            return Result.error("点赞失败");
+        List<Article> likesArticle = articleService.getLikesByUserId();
+        for (Article tmpArticle:likesArticle) {
+            if(tmpArticle.getArticleId().equals(articleId)){
+                return Result.error("已经赞过");
+            }
         }
+        articleService.likeArticle(articleId);
         return Result.success();
     }
 }

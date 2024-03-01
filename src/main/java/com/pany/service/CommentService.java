@@ -39,5 +39,10 @@ public class CommentService {
 
     public void likeComment(String commentId) {
         commentMapper.likeComment(commentId);
+        commentMapper.addFavoriteComment(String.valueOf(threadLocalUtil.get("userId")),commentId);
+    }
+
+    public List<Comment> getFavoriteCommentByUserId() {
+        return commentMapper.getFavoriteCommentByUserId(String.valueOf(threadLocalUtil.get("userId")));
     }
 }

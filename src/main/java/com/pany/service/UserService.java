@@ -69,7 +69,7 @@ public class UserService {
     }
 
     public void updateAvatar(String url) {
-        userMapper.updateAvatar((String)threadLocalUtil.get("userI_d"),url);
+        userMapper.updateAvatar((String)threadLocalUtil.get("userId"),url);
     }
 
     public String uploadAvatar(String objectName, InputStream inputStream){

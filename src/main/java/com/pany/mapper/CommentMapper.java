@@ -26,4 +26,10 @@ public interface CommentMapper {
 
     @Update("update comment set likes = likes + 1 where commentId = #{commentId}")
     void likeComment(String commentId);
+
+    @Insert("insert into favorite_comment (userId,commentId) values (#{userId},#{commentId});")
+    void addFavoriteComment(String userId, String commentId);
+
+    @Select("select * from favorite_comment where userId = #{userId}")
+    List<Comment> getFavoriteCommentByUserId(String userId);
 }
