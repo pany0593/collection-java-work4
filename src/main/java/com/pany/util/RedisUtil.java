@@ -25,4 +25,9 @@ public class RedisUtil {
         ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
         return operations.get(key);
     }
+
+    public void delete(String key){
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        operations.getOperations().delete(key);
+    }
 }

@@ -9,6 +9,7 @@ import com.pany.util.AliOssUtil;
 import com.pany.util.RedisUtil;
 import com.pany.util.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
+import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,6 @@ public class UserController {
     private UserService userService;
     @Autowired
     private ArticleService articleService;
-    @Autowired
-    private RedisUtil redisUtil;
 
     @PostMapping("/register")
     public Result register(@Pattern(regexp = "^\\S{5,20}$") String username,
@@ -88,8 +87,9 @@ public class UserController {
     }
 
     @PutMapping("/update_password")
-    public Result updatePassword(@Pattern(regexp = "^\\S{5,20}$") String newPassword) {
-        userService.updatePassword(newPassword);
+    public Result updatePassword(@Pattern(regexp = "^\\S{5,20}$") String newPassword,
+                                 @RequestHeader("Authorization") String token) {
+        userService.updatePassword(newPassword,token);
         return Result.success();
     }
 

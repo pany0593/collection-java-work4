@@ -8,6 +8,7 @@ import com.pany.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class UserService {
     private JwtUtils jwtUtils;
     @Autowired
     private AliOssUtil aliOssUtil;
+    @Autowired
+    private RedisUtil redisUtil;
     @Autowired
     private ThreadLocalUtil threadLocalUtil;
     @Value("${default.avatarUrl}")
@@ -56,6 +59,7 @@ public class UserService {
         claims.put("userId",loginUser.getUserId());
         claims.put("username",loginUser.getUsername());
         String token= jwtUtils.genToken(claims);
+        redisUtil.set(token,token);
         return new LoginResponse(loginUser.getAvatarUrl(),token);
     }
 
@@ -63,7 +67,8 @@ public class UserService {
         userMapper.updateName((String)threadLocalUtil.get("userId"),newName);
     }
 
-    public void updatePassword(String newPassword) {
+    public void updatePassword(String newPassword,String token) {
+        redisUtil.delete(token);
         String md5Password = md5Utils.getMd5(newPassword);
         userMapper.updatePassword((String)threadLocalUtil.get("userId"),md5Password);
     }
