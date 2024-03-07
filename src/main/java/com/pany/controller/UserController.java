@@ -6,6 +6,7 @@ import com.pany.pojo.User;
 import com.pany.service.ArticleService;
 import com.pany.service.UserService;
 import com.pany.util.AliOssUtil;
+import com.pany.util.RedisUtil;
 import com.pany.util.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import java.util.Objects;
 
 @Validated
 @RestController
-//@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
@@ -28,6 +28,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @PostMapping("/register")
     public Result register(@Pattern(regexp = "^\\S{5,20}$") String username,

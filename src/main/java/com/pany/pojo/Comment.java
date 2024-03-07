@@ -16,12 +16,11 @@ public class Comment {
     @JsonIgnore
     private String fatherId;
     private String userId;
+    private String userName;
     private String content;
     private String createTime;
     private Integer likes;
     private Integer level;
     private String avatarUrl;
     private List<Comment> subComments;
-
-
 }

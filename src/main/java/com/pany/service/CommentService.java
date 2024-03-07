@@ -18,6 +18,8 @@ public class CommentService {
     private SnowFlakeUtils snowFlakeUtils;
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private UserService userService;
     public String addComment(String articleId, String content, Integer level) {
         String userId = (String) threadLocalUtil.get("userId");
         String commentId="CM"+snowFlakeUtils.nextId();
@@ -33,6 +35,7 @@ public class CommentService {
         List<Comment> comments = commentMapper.findFirstByArticleId(articleId);
         for (Comment comment:comments) {
             comment.setSubComments(commentMapper.findSecondByCommentId(comment.getCommentId()));
+            comment.setUserName(userService.getNameById(comment.getUserId()));
         }
         return comments;
     }
