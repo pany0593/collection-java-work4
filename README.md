@@ -1,5 +1,6 @@
 # 项目结构
 
+```
 ├─java
 │  └─com
 │      └─pany
@@ -53,6 +54,9 @@
 │
 └─resources
         application.yml
+```
+
+
 
 # API文档
 
