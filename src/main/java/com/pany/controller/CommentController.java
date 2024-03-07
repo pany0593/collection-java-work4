@@ -1,15 +1,11 @@
 package com.pany.controller;
 
-import com.pany.pojo.Article;
 import com.pany.pojo.Comment;
 import com.pany.pojo.Result;
 import com.pany.service.CommentService;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

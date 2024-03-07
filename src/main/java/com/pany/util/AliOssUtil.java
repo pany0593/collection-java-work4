@@ -71,14 +71,13 @@ public class AliOssUtil {
 
     public String downLoadArticle(String articleId) throws IOException {
         String objectName = "article/" + articleId + ".txt";
-        String content = null;
+        String content = "";
         OSS ossClient = new OSSClientBuilder().build(endpoint,accessKeyId,accessKeySecret);
         try {
             OSSObject ossObject = ossClient.getObject(bucketName, objectName);
             BufferedReader reader = new BufferedReader(new InputStreamReader(ossObject.getObjectContent()));
             String line;
             while ((line = reader.readLine()) != null) {
-//                content += line+"\n";
                 content += line;
             }
             reader.close();

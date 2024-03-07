@@ -19,6 +19,11 @@ public class LoginInterceptors implements HandlerInterceptor {
     private ThreadLocalUtil threadLocalUtil;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println(request.getMethod());
+        if(request.getMethod().equals("OPTIONS")){
+            response.setStatus(200);
+            return true;
+        }
         String token=request.getHeader("Authorization");
         try {
             Map<String, Object> claims = jwtUtils.parseToken(token);

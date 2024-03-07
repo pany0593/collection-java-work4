@@ -15,15 +15,14 @@ public interface ArticleMapper {
             " values (#{articleId},#{title},#{authorId},#{desc},now())")
     void addArticle(String articleId, String title,String authorId, String desc);
 
-    @Insert("insert into user_article_mer (userId,articleId) values (#{authorId},#{articleId})")
-    void addMerge(String authorId, String articleId);
-
-    @Select("select * from article where articleId = #{articleId}")
+    @Select("select articleId,title,authorId,`desc`,createTime,likes,clicks from article where articleId = #{articleId}")
     Article findByArticleId(String articleId);
 
-    @Select("select * from article order by #{sort} desc limit #{offset}, #{pagesPerPage}")
-    List<Article> getList(Integer offset, String sort,Integer pagesPerPage);
+    @Select("select articleId,title,authorId,`desc`,createTime,likes,clicks from article order by createTime desc limit #{offset}, #{pagesPerPage}")
+    List<Article> getListByTime(Integer offset,Integer pagesPerPage);
 
+    @Select("select articleId,title,authorId,`desc`,createTime,likes,clicks from article order by clicks desc limit #{offset}, #{pagesPerPage}")
+    List<Article> getListByClick(Integer offset,Integer pagesPerPage);
     @Update("update article set likes = likes + 1 where articleId = #{articleId}")
     void likeArticle(String articleId);
 
@@ -33,7 +32,9 @@ public interface ArticleMapper {
     @Update("update article set clicks = clicks + 1 where articleId = #{articleId}")
     void addClicks(String articleId);
 
-    @Select("select * from article where authorId = #{userId}")
+    @Select("select articleId,title,authorId,`desc`,createTime,likes,clicks from article where authorId = #{userId}")
     List<Article> getArticleByUserId(String userId);
 
+    @Select("select count(articleId) FROM article")
+    int getArticleNum();
 }

@@ -20,6 +20,7 @@ import java.util.Objects;
 
 @Validated
 @RestController
+//@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
@@ -65,11 +66,7 @@ public class UserController {
     @GetMapping("/get_user_article")
     public Result getArticleByUserId(){
         List<Article> articles = articleService.getArticleByUserId();
-        if(articles.isEmpty()){
-            return Result.success("NULL");
-        }else{
-            return Result.success(articles);
-        }
+        return Result.success(articles);
     }
 
     @GetMapping("/get_user_likes")

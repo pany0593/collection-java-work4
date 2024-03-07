@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 public interface FavoriteMapper {
 
-    @Select("select * from favorite where userId = #{userId}")
+    @Select("select userId,articleId from favorite where userId = #{userId}")
     List<Favorite> getLikesByUserId(String userId);
 }

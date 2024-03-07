@@ -24,7 +24,6 @@ public class ArticleService {
     private ArticleMapper articleMapper;
     @Autowired
     private FavoriteMapper favoriteMapper;
-    private Integer pagesPerPage=4;
     //?
     public String createArticleId() {
         return "AR"+ snowFlakeUtils.nextId();
@@ -32,21 +31,19 @@ public class ArticleService {
     public void createArticle(String articleId, String title, String desc) {
         String authorId= (String) threadLocalUtil.get("userId");
         articleMapper.addArticle(articleId,title,authorId,desc);
-        articleMapper.addMerge(authorId,articleId);
     }
     public Article findByArticleId(String articleId){
         Article article=articleMapper.findByArticleId(articleId);
         return article;
     }
 
-    public List<Article> getList(Integer page, Integer sort) {
-        String sortBy;
+    public List<Article> getList(Integer page, Integer sort,Integer pagesPerPage) {
+        List<Article> articles;
         if(sort==1){
-            sortBy="createTime";
+            articles=articleMapper.getListByTime((page - 1) * pagesPerPage, pagesPerPage);
         }else{
-            sortBy="clicks";
+            articles=articleMapper.getListByClick((page - 1) * pagesPerPage, pagesPerPage);
         }
-        List<Article> articles = articleMapper.getList((page - 1) * pagesPerPage, sortBy, pagesPerPage);
         for (Article article:articles) {
             article.setAuthorName(userService.getNameById(article.getAuthorId()));
         }
@@ -79,5 +76,9 @@ public class ArticleService {
 
     public String getNameById(String authorId) {
         return userService.getNameById(authorId);
+    }
+
+    public int getArticleNum() {
+        return articleMapper.getArticleNum();
     }
 }

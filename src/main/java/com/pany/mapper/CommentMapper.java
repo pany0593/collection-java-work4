@@ -15,13 +15,13 @@ public interface CommentMapper {
             "values (#{commentId} , #{fatherId} , #{userId} , #{content} , now() , #{level})")
     void addComment(String commentId, String fatherId, String userId, String content, Integer level);
 
-    @Select("select * from comment where commentId = #{commentId} ")
+    @Select("select commentId,fatherId,userId,content,createTime,likes,level,avatarUrl from comment where commentId = #{commentId} ")
     Comment findByCommentId(String commentId);
 
-    @Select("select * from comment where fatherId = #{fatherId} and level = 1")
+    @Select("select commentId,fatherId,userId,content,createTime,likes,level,avatarUrl from comment where fatherId = #{fatherId} and level = 1")
     List<Comment> findFirstByArticleId(String fatherId);
 
-    @Select("select * from comment where fatherId = #{commentId} and level = 2")
+    @Select("select commentId,fatherId,userId,content,createTime,likes,level,avatarUrl from comment where fatherId = #{commentId} and level = 2")
     List<Comment> findSecondByCommentId(String commentId);
 
     @Update("update comment set likes = likes + 1 where commentId = #{commentId}")
@@ -30,6 +30,6 @@ public interface CommentMapper {
     @Insert("insert into favorite_comment (userId,commentId) values (#{userId},#{commentId});")
     void addFavoriteComment(String userId, String commentId);
 
-    @Select("select * from favorite_comment where userId = #{userId}")
+    @Select("select userId,commentId from favorite_comment where userId = #{userId}")
     List<Comment> getFavoriteCommentByUserId(String userId);
 }
