@@ -12,6 +12,7 @@ public class GetArticleResponse {
     private String title;
     private String authorId;
     private String authorName;
+    private String authorAvatar;
     private String desc;
     private String content;
     private String createTime;

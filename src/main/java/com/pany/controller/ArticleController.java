@@ -5,6 +5,7 @@ import com.pany.pojo.Result;
 import com.pany.response.GetArticleListResponse;
 import com.pany.response.GetArticleResponse;
 import com.pany.service.ArticleService;
+import com.pany.service.UserService;
 import com.pany.util.AliOssUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,8 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private AliOssUtil aliOssUtil;
     private Integer pagesPerPage=4;
@@ -54,7 +57,9 @@ public class ArticleController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return Result.success(new GetArticleResponse(article, content));
+        GetArticleResponse response = new GetArticleResponse(article, content);
+        response.setAuthorAvatar(userService.getUserAvatar(response.getAuthorId()));
+        return Result.success(response);
     }
 
     @GetMapping("/get_list")
