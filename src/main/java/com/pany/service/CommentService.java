@@ -36,6 +36,7 @@ public class CommentService {
         for (Comment comment:comments) {
             comment.setSubComments(commentMapper.findSecondByCommentId(comment.getCommentId()));
             comment.setUserName(userService.getNameById(comment.getUserId()));
+            comment.setAvatarUrl(userService.getUserAvatar(comment.getUserId()));
         }
         return comments;
     }
