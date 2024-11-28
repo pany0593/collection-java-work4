@@ -36,7 +36,7 @@ jobs:
         ECS_HOST: ${{ secrets.ECS_HOST }}         # ECS 的公网 IP
         ECS_USER: ${{ secrets.ECS_USER }}         # SSH 用户名
         ECS_KEY: ${{ secrets.ECS_KEY }}           # SSH 私钥
-        APP_PATH: "/home/ecs_user/my-app"         # ECS 上的目标路径
+        APP_PATH: "/home/work4"         # ECS 上的目标路径
       run: |
         # 添加私钥到 SSH 配置
         echo "${ECS_KEY}" > ecs_key.pem
