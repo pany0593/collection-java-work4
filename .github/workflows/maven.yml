@@ -43,12 +43,12 @@ jobs:
         chmod 600 ecs_key.pem
 
         # 上传构建产物到 ECS
-        scp -i ecs_key.pem target/*.jar $ECS_USER@$ECS_HOST:$APP_PATH/app.jar
+        #scp -i ecs_key.pem target/*.jar $ECS_USER@$ECS_HOST:$APP_PATH/app.jar
 
         # 登录到 ECS 并运行应用
         ssh -i ecs_key.pem $ECS_USER@$ECS_HOST << 'EOF'
-        pkill -f 'java -jar' || true            # 停止已有应用（可选）
-        nohup java -jar $APP_PATH/app.jar > $APP_PATH/app.log 2>&1 &
+        #pkill -f 'java -jar' || true            # 停止已有应用（可选）
+        #nohup java -jar $APP_PATH/app.jar > $APP_PATH/app.log 2>&1 &
         exit
         EOF
 
